@@ -23,7 +23,10 @@ describe('RoutingService', () => {
           provide: ActivatedRoute, 
           useValue: { 
             snapshot: {
-              paramMap: convertToParamMap({ id: '123', category: 'books' })
+              params: { id: '123', category: 'books' },
+              paramMap: convertToParamMap({ id: '123', category: 'books' }),
+              queryParamMap: convertToParamMap({}),
+              url: [new UrlSegment('', {})]
             } 
           } 
         }
@@ -33,6 +36,8 @@ describe('RoutingService', () => {
     router = TestBed.inject(Router);
     activatedRoute = TestBed.inject(ActivatedRoute);
   });
+  
+  
 
   it('should be created', () => {
     expect(service).toBeTruthy();

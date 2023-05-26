@@ -15,16 +15,20 @@ import 'reflect-metadata';
 })
 
 export class RoutingService implements CanActivate {
-    activatedRoute: any;
-    constructor(private router: Router, private route: ActivatedRoute) {}
+    constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         // Implement your guard logic here
         return true; // Or perform actual guard checks
       }
     
-    getRouteParams(): Params {
-        return this.activatedRoute.snapshot.params;
-    }
+      getRouteParams(): any {
+        if (this.activatedRoute.snapshot) {
+          return this.activatedRoute.snapshot.params;
+        } else {
+          return {};
+        }
+      }
+      
 
     navigateToRoute(route: string, queryParams?: Params): void {
         this.router.navigate([route], { queryParams });
@@ -45,7 +49,7 @@ export class RoutingService implements CanActivate {
     }
 
     getQueryParams(): Params {
-        return this.route.snapshot.queryParams;
+        return this.activatedRoute.snapshot.queryParams;
 
     }
 
