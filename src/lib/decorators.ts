@@ -8,4 +8,12 @@ export function RouteConfig(route: Route) {
     }
 }
 
+// LAZY LOADING EASIER
+export function LazyLoad(moduleFn: () => Promise<NgModule>) {
+    return function(target: any) {
+        Reflect.defineMetadata('lazyModule', moduleFn, target);
+    }
+}
+
+
 
