@@ -7,6 +7,8 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, ActivatedRoute, Params, Router, CanActivateFn, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import 'reflect-metadata';
+
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +41,7 @@ export class RoutingService implements CanActivate {
 
     getQueryParams(): Params {
         return this.route.snapshot.queryParams;
-        
+
     }
 
 }

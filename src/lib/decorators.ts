@@ -1,5 +1,6 @@
 import { Route } from "@angular/router";
 import { NgModule } from "@angular/core";
+import 'reflect-metadata';
 
 //route config
 export function RouteConfig(route: Route) {
