@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router, ActivatedRoute, UrlSegment, ActivatedRouteSnapshot } from '@angular/router';
+import { Router, ActivatedRoute, UrlSegment, ActivatedRouteSnapshot, convertToParamMap } from '@angular/router';
 import { RoutingService } from './routing.service';
 
 describe('RoutingService', () => {
@@ -7,28 +7,25 @@ describe('RoutingService', () => {
   let router: Router;
   let activatedRoute: ActivatedRoute;
 
-  const mockActivatedRouteSnapshot: Partial<ActivatedRouteSnapshot> = {
-    url: [new UrlSegment('', {})],
-    paramMap: {
-      has: (name: string) => false,
-      get: (name: string) => null,
-      getAll: (name: string) => [],
-      keys: []
-    },
-    queryParamMap: {
-      has: (name: string) => false,
-      get: (name: string) => null,
-      getAll: (name: string) => [],
-      keys: []
-    }
-  };
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         RoutingService,
-        { provide: Router, useValue: { navigateByUrl: jasmine.createSpy('navigateByUrl'), isActive: jasmine.createSpy('isActive') } },
-        { provide: ActivatedRoute, useValue: { snapshot: mockActivatedRouteSnapshot } }
+        { 
+          provide: Router, 
+          useValue: { 
+            navigateByUrl: jasmine.createSpy('navigateByUrl').and.returnValue(Promise.resolve(true)),
+            isActive: jasmine.createSpy('isActive').and.returnValue(true) 
+          } 
+        },
+        { 
+          provide: ActivatedRoute, 
+          useValue: { 
+            snapshot: {
+              paramMap: convertToParamMap({ id: '123', category: 'books' })
+            } 
+          } 
+        }
       ]
     });
     service = TestBed.inject(RoutingService);
@@ -41,7 +38,6 @@ describe('RoutingService', () => {
   });
 
   it('should navigate to a specific route', () => {
-    spyOn(router, 'navigateByUrl');
     const route = '/dashboard';
     service.navigateToRoute(route);
     expect(router.navigateByUrl).toHaveBeenCalledWith(route);
@@ -49,13 +45,11 @@ describe('RoutingService', () => {
 
   it('should get route parameters', () => {
     const params = { id: '123', category: 'books' };
-    activatedRoute.snapshot.params = params;
     const result = service.getRouteParams();
     expect(result).toEqual(params);
   });
 
   it('should check if a route is active', () => {
-    spyOn(router, 'isActive').and.returnValue(true);
     const route = '/dashboard';
     const result = service.isActive(route);
     expect(result).toBeTruthy();
