@@ -15,6 +15,7 @@ import 'reflect-metadata';
 })
 
 export class RoutingService implements CanActivate {
+    activatedRoute: any;
     constructor(private router: Router, private route: ActivatedRoute) {}
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         // Implement your guard logic here
@@ -22,11 +23,15 @@ export class RoutingService implements CanActivate {
       }
     
     getRouteParams(): Params {
-        return this.route.snapshot.params;
+        return this.activatedRoute.snapshot.params;
     }
 
     navigateToRoute(route: string, queryParams?: Params): void {
         this.router.navigate([route], { queryParams });
+    }
+
+    isActive(url: string): boolean {
+        return this.router.isActive(url, false);
     }
 
     //now add route guards

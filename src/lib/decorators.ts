@@ -1,10 +1,11 @@
 import { Route } from "@angular/router";
-import { NgModule } from "@angular/core";
+import { NgModule, Type } from "@angular/core";
 import 'reflect-metadata';
 
+
 //route config
-export function RouteConfig(route: Route) {
-    return function(target: any) {
+export function RouteConfig(route: Route): (target: Type<any>) => void {
+    return function(target: Type<any>) {
         Reflect.defineMetadata('routeConfig', route, target);
     }
 }
