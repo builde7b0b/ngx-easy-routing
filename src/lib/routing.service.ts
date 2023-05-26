@@ -18,6 +18,10 @@ export class RoutingService {
         return this.route.snapshot.params;
     }
 
+    navigateToRoute(route: string, queryParams?: Params): void {
+        this.router.navigate([route], { queryParams });
+    }
+
 
 
 }
