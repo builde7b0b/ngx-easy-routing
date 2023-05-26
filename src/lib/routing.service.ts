@@ -12,6 +12,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 
 export class RoutingService {
+    constructor(private router: Router, private route: ActivatedRoute) {}
+    
+    getRouteParams(): Params {
+        return this.route.snapshot.params;
+    }
 
 
 
