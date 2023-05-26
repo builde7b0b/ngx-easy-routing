@@ -14,6 +14,7 @@ describe('RoutingService', () => {
         { 
           provide: Router, 
           useValue: { 
+            navigate: jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true)),
             navigateByUrl: jasmine.createSpy('navigateByUrl').and.returnValue(Promise.resolve(true)),
             isActive: jasmine.createSpy('isActive').and.returnValue(true) 
           } 
@@ -40,7 +41,7 @@ describe('RoutingService', () => {
   it('should navigate to a specific route', () => {
     const route = '/dashboard';
     service.navigateToRoute(route);
-    expect(router.navigateByUrl).toHaveBeenCalledWith(route);
+    expect(router.navigate).toHaveBeenCalledWith([route], jasmine.anything());
   });
 
   it('should get route parameters', () => {
