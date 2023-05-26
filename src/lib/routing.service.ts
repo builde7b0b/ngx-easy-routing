@@ -11,7 +11,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
     providedIn: 'root'
 })
 
-export class RoutingServide {
+export class RoutingService {
 
-    
+
+
 }
