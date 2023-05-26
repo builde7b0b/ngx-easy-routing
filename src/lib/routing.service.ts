@@ -5,7 +5,7 @@
 // provides methods for accessing and manipulating route parameters and sharing data between routes:
 
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, ActivatedRoute, Params, Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +21,8 @@ export class RoutingService {
     navigateToRoute(route: string, queryParams?: Params): void {
         this.router.navigate([route], { queryParams });
     }
+
+    //now add route guards
 
 
 
